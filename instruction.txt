@@ -26,8 +26,6 @@ C7 mov 2 mem imm y 0
 25 and 2 eax imm n -1
 81 and 2 reg reg y 4
 
-d
-
 
 
 

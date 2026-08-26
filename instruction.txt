@@ -3,28 +3,65 @@
 8B mov 2 reg mem n -1
 B8 mov 2 reg imm n +rd
 C7 mov 2 mem imm y 0
+C7 mov 2 reg imm y 0
 3D cmp 2 eax imm n -1
 81 cmp 2 mem imm y 7
+81 cmp 2 reg imm y 7
 39 cmp 2 reg reg n -1
 39 cmp 2 mem reg n -1
 3B cmp 2 reg mem n -1
 05 add 2 eax imm n -1
-81 add 2 reg reg n -1
-81 add 2 mem reg n -1
+81 add 2 reg imm y 0
+81 add 2 mem imm y 0
 01 add 2 mem reg n -1
+01 add 2 reg reg n -1
 03 add 2 reg mem n -1
 2D sub 2 eax imm n -1
+81 sub 2 reg imm y 5
 81 sub 2 mem imm y 5
-29 sub 2 mem reg n -1
+29 sub 2 reg reg n -1
 29 sub 2 mem reg n -1
 2B sub 2 reg mem n -1
 35 xor 2 eax imm n -1
 81 xor 2 mem imm y 6
+81 xor 2 reg imm y 6
 31 xor 2 reg reg n -1
 31 xor 2 mem reg n -1
 33 xor 2 reg mem n -1
 25 and 2 eax imm n -1
-81 and 2 reg reg y 4
+81 and 2 reg imm y 4
+81 and 2 mem imm y 4
+21 and 2 reg reg n -1
+21 and 2 mem reg n -1
+23 and 2 reg mem n -1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

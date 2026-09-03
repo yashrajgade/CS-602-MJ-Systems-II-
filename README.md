@@ -43,13 +43,3 @@ Assignment_opcode_check/
 ├── Version1_1.cpp
 ├── demo.asm
 └── instructions.txt
-
-
-
-## Problems Faced and Solutions
-
-- **Reading opcode data:** Used a class and vector to store the opcode details.
-- **Assembly directives and labels:** Ignored `global`, `section`, labels, and data directives.
-- **Comments:** Removed comments starting with `;` before reading the instruction.
-- **Operand types:** Checked whether an operand is a register, constant, memory, or symbol.
-- **Invalid mnemonics:** Compared the mnemonic with the opcode table and showed **Found** or **Not Found**.

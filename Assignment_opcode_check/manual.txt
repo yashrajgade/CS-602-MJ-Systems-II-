@@ -1,0 +1,4 @@
+Commands to Run
+
+g++ opcodecheck.cpp -o assembler
+./assembler

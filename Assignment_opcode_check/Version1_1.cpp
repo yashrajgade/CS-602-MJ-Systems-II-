@@ -186,7 +186,7 @@ int main()
 
 
         
-        cout << "\nMnemonic : "
+        cout << "\nMnemonic  : "
              << mnemonic << endl;
 
         if (found)

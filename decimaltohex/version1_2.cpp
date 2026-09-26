@@ -295,7 +295,7 @@ int main()
             cout << "DD Value: "
                  << number << endl;
 
-            cout << "Hexadecimal: ";
+            cout << "Hexadecimal : ";
 
             convertToHex(number);
 

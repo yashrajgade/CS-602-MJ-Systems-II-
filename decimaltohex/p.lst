@@ -1,0 +1,16 @@
+     1                                  global main
+     2                                  
+     3                                  section .data
+     4 00000000 0A000000                    num dd 10
+     5 00000004 796173680A00                name db "yash",10,0
+     6 0000000A 68656C6C6F0A00              message db "hello",10,0
+     7 00000011 41                          grade db 'A'
+     8                                  
+     9                                  section .text
+    10                                  
+    11                                  main:
+    12 00000000 89D8                        mov eax, ebx
+    13 00000002 B80A000000                  mov eax, 10
+    14 00000007 8B03                        mov eax, [ebx]
+    15 00000009 01D8                        add eax, ebx
+    16 0000000B 29D8                        sub eax, ebx

@@ -1,45 +1,44 @@
-# CS-602-MJ-Systems-II-
-# Opcode Checker and Assembly Instruction Parser
+# CS-602-MJ-Systems-II
 
-This is a C++ program made for checking assembly instructions using an opcode table.
+# One-Pass IA-32 Assembler
+
+This is a C++ project developed as part of the CS-602 MJ Systems-II course. The project focuses on reading assembly program files, processing data directives, and converting data into hexadecimal representation according to IA-32 conventions.
 
 ## What This Program Does
 
-- Reads the opcode details from `instructions.txt`
-- Reads the assembly program from `demo.asm`
-- Checks if the mnemonic is present in the opcode table
-- Shows whether the mnemonic is Found or Not Found
-- Identifies the operands used in the instruction
-- Identifies the type of operand
+- Reads opcode details from `instructions.txt`.
+- Reads the assembly program from `demo.asm`.
+- Reads and processes `DB` and `DD` data directives.
+- Converts character and string data into hexadecimal values.
+- Converts integer values declared using `DD` into 32-bit hexadecimal representation.
+- Stores `DD` values in Little-Endian format.
+- Calculates data offsets according to the number of bytes occupied by each declaration.
+- Displays the hexadecimal representation along with the corresponding offsets.
+- Supports the initial stages of assembly instruction processing using an opcode table.
 
-The operand types checked are:
+## Data Directives
 
-- Register
-- Constant
-- Memory
-- Symbol
+### DB (Define Byte)
 
-The program also ignores:
+- Stores character, string, and byte-sized numeric data.
+- Converts characters into their hexadecimal ASCII values.
+- Processes multiple values separated by commas.
+- Increases the data offset according to the number of bytes stored.
 
-- `global`
-- `section`
-- Labels
-- Data directives
-- Comments
+### DD (Define Doubleword)
 
-## Problems Faced and Solutions
+- Stores 32-bit integer values.
+- Converts integer values into hexadecimal representation.
+- Stores each value in Little-Endian format.
+- Processes multiple values separated by commas.
+- Increases the data offset by four bytes for each value.
 
-- **Reading opcode data:** Used a class and vector to store the opcode details.
-- **Assembly directives and labels:** Ignored `global`, `section`, labels, and data directives.
-- **Comments:** Removed comments starting with `;` before reading the instruction.
-- **Operand types:** Checked whether an operand is a register, constant, memory, or symbol.
-- **Invalid mnemonics:** Compared the mnemonic with the opcode table and showed **Found** or **Not Found**.
+## Little-Endian Format
 
+In IA-32, multi-byte values are stored with the least significant byte first.
 
-## Project Files
+For example:
 
+Decimal value:
 ```text
-Assignment_opcode_check/
-├── Version1_1.cpp
-├── demo.asm
-└── instructions.txt
+60

@@ -185,6 +185,13 @@ void printData(string hexOutput,
     }
 }
 
+class Symbol
+{
+public:
+    string name;
+    int offset;
+    int size;
+};
 
 int main()
 {

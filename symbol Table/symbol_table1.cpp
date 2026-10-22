@@ -191,7 +191,7 @@ public:
     string name;
     int offset;
     int size;
-    char type;
+    string type;
 };
 
 int main()
@@ -239,8 +239,8 @@ int main()
     string line;
 
     int dataOffset = 0;
-    int textOffset = 0;
-    string currentSection = "";
+    bool inDataSection = false;
+    bool inTextSection = false;
     vector<Symbol> symbolTable;
 
 
@@ -268,28 +268,33 @@ int main()
             continue;
 
 
+        if (mnemonic == "section")
+        {
+            string sectionName;
+            ss >> sectionName;
+
+            inDataSection = (sectionName == ".data");
+            inTextSection = (sectionName == ".text");
+
+            continue;
+        }
+
         if (mnemonic == "global")
         {
             continue;
         }
 
-        if (mnemonic == "section")
-        {
-            ss >> currentSection;
-            continue;
-        }
 
         if (mnemonic.back() == ':')
         {
-            string labelName = mnemonic.substr(0, mnemonic.length() - 1);
-
-            if (currentSection == ".text")
+            if (inTextSection)
             {
                 Symbol s;
-                s.name = labelName;
-                s.offset = textOffset;
+                s.name = mnemonic.substr(0, mnemonic.length() - 1);
+                s.offset = 0;
                 s.size = 0;
-                s.type = (labelName == "main") ? 'T' : 't';
+                s.type = "T";
+
                 symbolTable.push_back(s);
             }
 
@@ -302,7 +307,7 @@ int main()
         ss >> directive;
 
 
-        if (currentSection == ".data" && directive == "db")
+        if (directive == "db")
         {
             string value;
 
@@ -374,12 +379,16 @@ int main()
             }
 
 
-            Symbol s;
-            s.name = mnemonic;
-            s.offset = dataOffset;
-            s.size = hexOutput.length() / 2;
-            s.type = 'd';
-            symbolTable.push_back(s);
+            if (inDataSection)
+            {
+                Symbol s;
+                s.name = mnemonic;
+                s.offset = dataOffset;
+                s.size = hexOutput.length() / 2;
+                s.type = "d";
+
+                symbolTable.push_back(s);
+            }
 
             string source =
                 mnemonic + " db" + value;
@@ -394,7 +403,7 @@ int main()
         }
 
 
-        if (currentSection == ".data" && directive == "dd")
+        if (directive == "dd")
         {
             string value;
 
@@ -432,12 +441,16 @@ int main()
             }
 
 
-            Symbol s;
-            s.name = mnemonic;
-            s.offset = dataOffset;
-            s.size = hexOutput.length() / 2;
-            s.type = 'd';
-            symbolTable.push_back(s);
+            if (inDataSection)
+            {
+                Symbol s;
+                s.name = mnemonic;
+                s.offset = dataOffset;
+                s.size = hexOutput.length() / 2;
+                s.type = "d";
+
+                symbolTable.push_back(s);
+            }
 
             string source =
                 mnemonic + " dd" + value;
@@ -501,12 +514,14 @@ int main()
 
     if (!symbolFile)
     {
-        cout << "Error: Cannot create symbol_table.txt" << endl;
+        cout << "Error: Cannot create symbol_table.txt"
+             << endl;
+
         return 1;
     }
 
-    symbolFile << "Address  Type  Symbol\n";
-    symbolFile << "--------------------------\n";
+    symbolFile << "Address  Type  Symbol" << endl;
+    symbolFile << "--------------------------" << endl;
 
     for (const auto &s : symbolTable)
     {
@@ -517,7 +532,8 @@ int main()
 
     symbolFile.close();
 
-    cout << "\nSymbol table saved to symbol_table.txt" << endl;
+    cout << "\nSymbol table saved to symbol_table.txt"
+         << endl;
 
     return 0;
 }

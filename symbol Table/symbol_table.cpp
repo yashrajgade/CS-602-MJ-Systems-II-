@@ -385,9 +385,9 @@ int main()
                 mnemonic + " db" + value;
 
 
-            printData(hexOutput,
+           /* printData(hexOutput,
                       dataOffset,
-                      source);
+                      source);  */
 
 
             continue;
@@ -443,10 +443,9 @@ int main()
                 mnemonic + " dd" + value;
 
 
-            printData(hexOutput,
+           /* printData(hexOutput,
                       dataOffset,
-                      source);
-
+                      source); */
 
             continue;
         }
@@ -496,28 +495,33 @@ int main()
 
 
     asmfile.close();
+      
+     ofstream symbolFile("symbol_table.txt");
 
-    ofstream symbolFile("symbol_table.txt");
+  if (!symbolFile)
+  { 
+      cout << "Error: Cannot create symbol_table.txt" << endl;
+      return 1;
+  }
 
-    if (!symbolFile)
-    {
-        cout << "Error: Cannot create symbol_table.txt" << endl;
-        return 1;
-    }
+  cout << "\nSymbol Table\n";
+  cout << "Address  Type  Symbol\n";
 
-    symbolFile << "Address  Type  Symbol\n";
-    symbolFile << "--------------------------\n";
+  symbolFile << "Address  Type  Symbol\n";
 
-    for (const auto &s : symbolTable)
-    {
-        symbolFile << formatOffset(s.offset) << "  "
-                   << s.type << "     "
-                   << s.name << endl;
-    }
+  for (const auto &s : symbolTable)
+  {
+     cout << formatOffset(s.offset) << "  "
+          << s.type << "     "
+          << s.name << endl;
 
-    symbolFile.close();
+      symbolFile << formatOffset(s.offset) << "  "
+                << s.type << "     "
+                << s.name << endl;
+  }
 
-    cout << "\nSymbol table saved to symbol_table.txt" << endl;
+  symbolFile.close();
 
-    return 0;
-}
+  cout << "\nSymbol table saved to symbol_table.txt" << endl;
+      return 0;
+  }

@@ -191,6 +191,7 @@ public:
     string name;
     int offset;
     int size;
+    char type;
 };
 
 int main()
@@ -238,6 +239,9 @@ int main()
     string line;
 
     int dataOffset = 0;
+    int textOffset = 0;
+    string currentSection = "";
+    vector<Symbol> symbolTable;
 
 
     while (getline(asmfile, line))
@@ -264,15 +268,31 @@ int main()
             continue;
 
 
-        if (mnemonic == "global" ||
-            mnemonic == "section")
+        if (mnemonic == "global")
         {
             continue;
         }
 
+        if (mnemonic == "section")
+        {
+            ss >> currentSection;
+            continue;
+        }
 
         if (mnemonic.back() == ':')
         {
+            string labelName = mnemonic.substr(0, mnemonic.length() - 1);
+
+            if (currentSection == ".text")
+            {
+                Symbol s;
+                s.name = labelName;
+                s.offset = textOffset;
+                s.size = 0;
+                s.type = (labelName == "main") ? 'T' : 't';
+                symbolTable.push_back(s);
+            }
+
             continue;
         }
 
@@ -282,7 +302,7 @@ int main()
         ss >> directive;
 
 
-        if (directive == "db")
+        if (currentSection == ".data" && directive == "db")
         {
             string value;
 
@@ -354,6 +374,13 @@ int main()
             }
 
 
+            Symbol s;
+            s.name = mnemonic;
+            s.offset = dataOffset;
+            s.size = hexOutput.length() / 2;
+            s.type = 'd';
+            symbolTable.push_back(s);
+
             string source =
                 mnemonic + " db" + value;
 
@@ -367,7 +394,7 @@ int main()
         }
 
 
-        if (directive == "dd")
+        if (currentSection == ".data" && directive == "dd")
         {
             string value;
 
@@ -404,6 +431,13 @@ int main()
                 }
             }
 
+
+            Symbol s;
+            s.name = mnemonic;
+            s.offset = dataOffset;
+            s.size = hexOutput.length() / 2;
+            s.type = 'd';
+            symbolTable.push_back(s);
 
             string source =
                 mnemonic + " dd" + value;
@@ -462,6 +496,28 @@ int main()
 
 
     asmfile.close();
+
+    ofstream symbolFile("symbol_table.txt");
+
+    if (!symbolFile)
+    {
+        cout << "Error: Cannot create symbol_table.txt" << endl;
+        return 1;
+    }
+
+    symbolFile << "Address  Type  Symbol\n";
+    symbolFile << "--------------------------\n";
+
+    for (const auto &s : symbolTable)
+    {
+        symbolFile << formatOffset(s.offset) << "  "
+                   << s.type << "     "
+                   << s.name << endl;
+    }
+
+    symbolFile.close();
+
+    cout << "\nSymbol table saved to symbol_table.txt" << endl;
 
     return 0;
 }

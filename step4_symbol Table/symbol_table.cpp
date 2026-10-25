@@ -381,6 +381,9 @@ int main()
             s.type = 'd';
             symbolTable.push_back(s);
 
+            // Move to the next data address
+            dataOffset += s.size;
+
             string source =
                 mnemonic + " db" + value;
 
@@ -438,6 +441,9 @@ int main()
             s.size = hexOutput.length() / 2;
             s.type = 'd';
             symbolTable.push_back(s);
+
+            // Move to the next data address
+            dataOffset += s.size;
 
             string source =
                 mnemonic + " dd" + value;

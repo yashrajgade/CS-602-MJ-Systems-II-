@@ -126,4 +126,113 @@ This provides a foundation for understanding how assemblers associate symbolic i
 
 ## Instruction Processing
 
-The program reads instruction definitions from `instructions.txt` and uses the
+The program reads instruction definitions from `instructions.txt` and uses the opcode table during instruction analysis.
+
+The current implementation supports initial stages of instruction processing, including:
+
+- Mnemonic lookup.
+- Operand-type identification.
+- Opcode-table matching.
+- Selected instruction-encoding operations.
+- Hexadecimal representation of supported instruction bytes.
+
+Instruction encoding is currently limited to selected instruction forms and does not cover the complete IA-32 instruction set.
+
+## Project Structure
+
+```text
+CS-602-MJ-Systems-II/
+├── main.cpp
+├── instructions.txt
+├── demo.asm
+└── README.md
+```
+
+| File | Description |
+|---|---|
+| `main.cpp` | Contains the C++ implementation. |
+| `instructions.txt` | Stores opcode and instruction-format information. |
+| `demo.asm` | Contains assembly-language input for testing. |
+| `README.md` | Documents the project and its functionality. |
+
+*Note: Update the source filename in this structure if your actual C++ file uses a different name.*
+
+## Technologies Used
+
+- **Language:** C++
+- **Target Architecture:** IA-32 (32-bit x86)
+- **Operating System:** Linux
+- **Compiler:** GCC
+- **Input:** Assembly source file and opcode-definition file
+
+### Concepts Covered
+
+- Assembler Design
+- Opcode Tables
+- Assembly-Language Processing
+- Data Directives
+- Hexadecimal Conversion
+- Little-Endian Representation
+- Memory Offset Calculation
+- Symbol Tables
+- Instruction Encoding
+
+## Compilation and Execution
+
+### Step 1: Compile the Program
+
+```bash
+g++ main.cpp -o assembler
+```
+
+If your source file has a different name, replace `main.cpp` with the correct filename.
+
+### Step 2: Run the Program
+
+```bash
+./assembler
+```
+
+Ensure that `instructions.txt` and `demo.asm` are available at the file locations expected by the program.
+
+## Current Limitations
+
+The current implementation is an educational assembler prototype, with functionality developed incrementally.
+
+The following features are not yet fully implemented:
+
+- Complete IA-32 instruction-set support.
+- Full ModR/M and SIB encoding for all addressing modes.
+- Comprehensive displacement and immediate-value handling.
+- Complete label resolution and forward-reference processing.
+- A fully implemented two-pass assembly process.
+- Machine-code generation for arbitrary assembly programs.
+- Complete syntax and operand validation.
+
+These limitations define the current development scope and provide opportunities for future enhancement.
+
+## Future Enhancements
+
+- Expand support for IA-32 instruction formats.
+- Improve operand validation and instruction selection.
+- Implement additional ModR/M and SIB addressing modes.
+- Add displacement and immediate-value encoding.
+- Improve symbol resolution and label handling.
+- Extend assembly listing generation.
+- Develop a structured two-pass assembly workflow.
+- Test the implementation using additional assembly programs.
+
+## Conclusion
+
+The **One-Pass IA-32 Assembler** provides a practical foundation for understanding assembler construction through C++ and systems programming.
+
+By combining opcode-table processing, data-directive conversion, Little-Endian representation, memory-offset calculation, symbol-table management, and initial instruction encoding, the project connects theoretical concepts from computer architecture and system software with practical implementation.
+
+The current implementation establishes a foundation for progressively developing a more complete IA-32 assembler.
+
+---
+
+**Course:** CS-602 MJ Systems-II  
+**Project:** One-Pass IA-32 Assembler  
+**Language:** C++  
+**Architecture:** IA-32 (32-bit x86)

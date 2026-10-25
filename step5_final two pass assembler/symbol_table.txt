@@ -1,0 +1,8 @@
+Address  Type  Symbol
+00000000  d     Arr
+0000000C  d     a
+00000018  d     num
+0000001C  d     name
+00000022  d     message
+00000029  d     grade
+00000000  T     main
